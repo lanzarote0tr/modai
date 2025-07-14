@@ -1,11 +1,126 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MO:D·E Chat UI</title>
+    <link rel="stylesheet" href="stylesheets/index.css">
 </head>
 <body>
-  Hello World!
+    <div class="container">
+        <div class="sidebar">
+            <img src="" alt="">
+            <div class="profile">
+                <img src="images/logo.png" alt="Profile">
+                <div>Profile</div>
+            </div>
+            <div class="contact" onclick="loadChat('hanbyul')">
+                <img src="images/profile.png" alt="Avatar">
+                <div class="contact-info">
+                    <strong>한별이</strong><br>
+                    Lorem Ipsum is dummy...
+                </div>
+                <button onclick="event.stopPropagation(); summarizeChat('hanbyul')">Summarize</button>
+            </div>
+        </div>
+        <div class="chat-section">
+            <div class="chat-header">
+                <img src="images/profile.png" alt="Avatar">
+                <div>
+                    <strong>한별이</strong><br>
+                    <small style="color: #8cf78c;">Online</small>
+                </div>
+            </div>
+            <div class="message-box">
+                <div class="message incoming">
+                    안녕 나는 조나다.<br>당신이 매우 좋다.
+                </div>
+                <div class="message outgoing">
+                    너는 임찬윤을 닮았다.
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="안녕하세요 아리가또">
+                <button>&gt;</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const input = document.querySelector(".chat-input input");
+            const sendBtn = document.querySelector(".chat-input button");
+            const messageBox = document.querySelector(".message-box");
+
+            sendBtn.addEventListener("click", function () {
+              const message = input.value.trim();
+              if (message) {
+                // Add outgoing message to chat
+                const outgoingEl = document.createElement("div");
+                outgoingEl.className = "message outgoing";
+                outgoingEl.innerText = message;
+                messageBox.appendChild(outgoingEl);
+
+                // Optionally, scroll to bottom
+                messageBox.scrollTop = messageBox.scrollHeight;
+
+                // Send message to server
+                fetch('/', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ message })
+                })
+                .then(res => res.json())
+                .then(data => {
+                  // Add incoming message from server response
+                  if (data && data.reply) {
+                    const incomingEl = document.createElement("div");
+                    incomingEl.className = "message incoming";
+                    incomingEl.innerText = data.reply;
+                    messageBox.appendChild(incomingEl);
+                    messageBox.scrollTop = messageBox.scrollHeight;
+                  }
+                })
+                .catch(err => {
+                  const errorEl = document.createElement("div");
+                  errorEl.className = "message incoming";
+                  errorEl.innerText = "서버 오류가 발생했습니다.";
+                  messageBox.appendChild(errorEl);
+                  messageBox.scrollTop = messageBox.scrollHeight;
+                });
+
+                input.value = "";
+                input.focus();
+              }
+            });
+
+            input.addEventListener("keypress", function (e) {
+                if (e.key === "Enter") {
+                    sendBtn.click();
+                }
+            });
+        });
+
+        const chats = {
+            hanbyul: [
+                { type: 'incoming', text: '안녕 나는 조나다.\n당신이 매우 좋다.' },
+                { type: 'outgoing', text: '너는 임찬윤을 닮았다.' }
+            ]
+        };
+
+        function loadChat(userId) {
+            const messageBox = document.querySelector(".message-box");
+            messageBox.innerHTML = "";
+            chats[userId].forEach(msg => {
+                const el = document.createElement("div");
+                el.className = "message " + msg.type;
+                el.innerText = msg.text;
+                messageBox.appendChild(el);
+            });
+        }
+
+        function summarizeChat(userId) {
+            alert(`${userId}의 대화 요약: 좋아하는 감정을 표현한 채팅`);
+        }
+    </script>
 </body>
 </html>

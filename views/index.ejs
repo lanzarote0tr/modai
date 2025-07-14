@@ -23,26 +23,10 @@
                 <button onclick="event.stopPropagation(); summarizeChat('hanbyul')">Summarize</button>
             </div>
         </div>
-        <div class="chat-section">
-            <div class="chat-header">
-                <img src="images/profile.png" alt="Avatar">
-                <div>
-                    <strong>한별이</strong><br>
-                    <small style="color: #8cf78c;">Online</small>
-                </div>
-            </div>
-            <div class="message-box">
-                <div class="message incoming">
-                    안녕 나는 조나다.<br>당신이 매우 좋다.
-                </div>
-                <div class="message outgoing">
-                    너는 임찬윤을 닮았다.
-                </div>
-            </div>
-            <div class="chat-input">
-                <input type="text" placeholder="안녕하세요 아리가또">
-                <button>&gt;</button>
-            </div>
+        <div id="chat-output"></div>
+        <div class="chat-input">
+            <input id="chat-input" type="text" placeholder="메시지를 입력하세요">
+            <button id="send-btn">&gt;</button>
         </div>
     </div>
     <script>

@@ -1,8 +1,6 @@
-CREATE DATABASE modai;
-
-use modai;
-CHARACTER SET utf8mb4;
-COLLATE utf8mb4_general_ci;
+CREATE DATABASE modai
+  CHARACTER SET utf8mb4;
+  COLLATE utf8mb4_general_ci;
 
 CREATE TABLE RequestLogs (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,

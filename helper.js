@@ -1,5 +1,4 @@
-const moment = require('moment');
-const axios = require("axios");
+import axios from "axios";
 
 async function callChatGPT(prompt) {
   const apiKey = process.env.OPENAI_API_KEY;
@@ -31,4 +30,4 @@ async function callChatGPT(prompt) {
   }
 }
 
-module.exports = {callChatGPT};
+export default callChatGPT;

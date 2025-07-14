@@ -76,7 +76,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Routing
 app.use("/", indexRouter);
-app.use("/blog", blogRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

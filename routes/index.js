@@ -1,5 +1,5 @@
 import express from 'express';
-import { callChatGPT } from '../helper.js';
+import callChatGPT from '../helper.js';
 var router = express.Router();
 
 router.get('/', async function(req, res, next) {

@@ -9,7 +9,6 @@ import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
 
 import indexRouter from "./routes/index.js";
-import blogRouter from "./routes/blog.js";
 import pool from './utils/connectdb.js';
 import fs from 'fs';
 
